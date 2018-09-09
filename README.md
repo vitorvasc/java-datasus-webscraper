@@ -10,12 +10,12 @@ Utilizado para extrair dados do sistema de [cadastro nacional dos estabeleciment
 
 ### Instalação
 
-Faça o clone do repositório utilizando `git clone https://github.com/vitorvasc/java-datasus-webscraper.git`.
+Faça o clone do repositório utilizando `git clone https://github.com/vitorvasc/java-datasus-webscraper.git`.  
 Abra o prompt de comando e utilize o comando `java jar DataSus-1.0.jar`.
 
 ### Utilização
 
-A extração de dados será realizada especificamente para o estado de `PERNAMBUCO`no município de `OLINDA`.
+A extração de dados será realizada especificamente para o estado de `PERNAMBUCO`no município de `OLINDA`.  
 Os dados extraídos ficarão salvos no arquivo `estabelecimentos.csv`.
 
 
