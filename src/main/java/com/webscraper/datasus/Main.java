@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-    //Define a URL da página que o programa irá acessar
+    //Define a URL da pagina que o programa ira acessar
     private static final String PAGE = "http://cnes.datasus.gov.br/pages/estabelecimentos/consulta.jsp";
     private static final String PAGE_DETAILED = "http://cnes.datasus.gov.br/pages/estabelecimentos/ficha/index.jsp?coUnidade=260960";
     
@@ -21,16 +21,15 @@ public class Main {
     private static final long DEFAULT_JS_TIMEOUT = 2000;
     private static final long REDUCED_JS_TIMEOUT = 500;
     
-    //Lista de estabelecimentos contidos na página
+    //Lista de estabelecimentos contidos na pagina
     private static List<Estabelecimento> estabelecimentos = new ArrayList<>();
     
-    //Instância da página atual
+    //Instancia da pagina atual
     private static HtmlPage page;
     
-    //Definições do arquivo CSV
+    //Definicoes do arquivo CSV
     private static final String FILE_NAME = "estabelecimentos.csv";
-        private static final String FILE_HEADER = "Nome,NomeEmpresarial,Cnes,Cnpj,Logradouro,Numero,Complemento,Bairro,Municipio,UF,CEP,Telefone";
-    private static final String COMMA_DELIMITER = ",";
+    private static final String FILE_HEADER = "Nome,NomeEmpresarial,Cnes,Cnpj,Logradouro,Numero,Complemento,Bairro,Municipio,UF,CEP,Telefone";
     private static final String NEW_LINE_SEPARATOR = "\n";
        
     public static void main(String[] args) {
@@ -42,10 +41,10 @@ public class Main {
         try(final WebClient webClient = new WebClient(BrowserVersion.CHROME)) {
             setWebClientConfigurations(webClient);
             
-            //Abre a página através do webClient
+            //Abre a pagina atraves do webClient
             page = webClient.getPage(PAGE);
             
-            //Procura pelos campos de estado e município dentro da página
+            //Procura pelos campos de estado e municipio dentro da pagina
             HtmlSelect state = getSelectByNgModel("Estado");
             HtmlSelect city = getSelectByNgModel("Municipio");
             
@@ -53,11 +52,11 @@ public class Main {
             selectOption(state, "PERNAMBUCO");
             webClient.waitForBackgroundJavaScript(DEFAULT_JS_TIMEOUT);
             
-            //Seleciona especificiamente o município de OLINDA para realizar a pesquisa
+            //Seleciona especificiamente o municipio de OLINDA para realizar a pesquisa
             selectOption(city, "OLINDA");
             webClient.waitForBackgroundJavaScript(DEFAULT_JS_TIMEOUT);
             
-            //Finaliza a pesquisa após definição dos filtros acima
+            //Finaliza a pesquisa apos definicao dos filtros acima
             HtmlButton search = getButtonByClass("btn btn-primary");
             search.click();
             
@@ -84,11 +83,11 @@ public class Main {
             }
             
             /*
-            Mantive a função abaixo desabilitada pois devido erro de carregamento no framework utilizado
-            pelos desenvolvedores do site, a página não é carregada corretamente. 
-            Existe uma diferença entre abrir o site através de um navegador comum e abrir um site através
-            deste webdriver. Abrindo o site com informações detalhadas através do webdriver, não é possível
-            obter todas as informações detalhadas. Infelizmente este é um problema que não consegui solucionar
+            Mantive a funcao abaixo desabilitada pois devido erro de carregamento no framework utilizado
+            pelos desenvolvedores do site, a pagina nao e carregada corretamente. 
+            Existe uma diferenca entre abrir o site atraves de um navegador comum e abrir um site atraves
+            deste webdriver. Abrindo o site com informacoes detalhadas atraves do webdriver, nao e possivel
+            obter todas as informacoes detalhadas. Infelizmente este e um problema que nao consegui solucionar
             a tempo.
             */
 //            estabelecimentos.forEach(e -> {
@@ -117,39 +116,39 @@ public class Main {
         try(final WebClient webClient = new WebClient(BrowserVersion.CHROME)) {
             setWebClientConfigurations(webClient);
             
-            //Abre a página com informações detalhadas através do webClient
+            //Abre a pagina com informacoes detalhadas atraves do webClient
             page = webClient.getPage(PAGE_DETAILED+e.getCNES());
             webClient.waitForBackgroundJavaScript(REDUCED_JS_TIMEOUT);
      
-            //Percorre a página e busca a informação contendo nome empresarial do estabelecimento
+            //Percorre a pagina e busca a informacao contendo nome empresarial do estabelecimento
             HtmlInput inputNome = getInputByNgValue("estabelecimento.noEmpresarial");
             e.setNome(inputNome.getValueAttribute());
             
-            //Percorre a página e busca a informação contendo CNPJ do estabelecimento
+            //Percorre a pagina e busca a informacao contendo CNPJ do estabelecimento
             HtmlInput inputCnpj = getInputByMask("99.999.999/9999-99");
             e.setCNPJ(Long.parseLong(inputCnpj.getValueAttribute()));
             
-            //Percorre a página e busca a informação contendo logradouro do estabelecimento
+            //Percorre a pagina e busca a informacao contendo logradouro do estabelecimento
             HtmlInput inputLogradouro = getInputByNgValue("estabelecimento.noLogradouro");
             e.setLogradouro(inputLogradouro.getValueAttribute());
             
-            //Percorre a página e busca a informação contendo número do estabelecimento
+            //Percorre a pagina e busca a informacao contendo numero do estabelecimento
             HtmlInput inputNumero = getInputByNgValue("estabelecimento.nuEndereco");
             e.setNumero(Integer.parseInt(inputNumero.getValueAttribute()));
             
-            //Percorre a página e busca a informação contendo complemento do estabelecimento
+            //Percorre a pagina e busca a informacao contendo complemento do estabelecimento
             HtmlInput inputComplemento = getInputByNgValue("estabelecimento.noComplemento");
             e.setComplemento(inputComplemento.getValueAttribute());
             
-            //Percorre a página e busca a informação contendo bairro do estabelecimento
+            //Percorre a pagina e busca a informacao contendo bairro do estabelecimento
             HtmlInput inputBairro = getInputByNgValue("estabelecimento.bairro");
             e.setBairro(inputBairro.getValueAttribute());
             
-            //Percorre a página e busca a informação contendo CNPJ do estabelecimento
+            //Percorre a pagina e busca a informacao contendo CNPJ do estabelecimento
             HtmlInput inputCEP = getInputByMask("99999-999");
             e.setCEP(inputCEP.getValueAttribute());
             
-            //Percorre a página e busca a informação contendo município do estabelecimento
+            //Percorre a pagina e busca a informacao contendo municipio do estabelecimento
             HtmlInput inputTelefone = getInputByNgValue("estabelecimento.nuTelefone");
             e.setTelefone(inputTelefone.getValueAttribute());            
                         
