@@ -10,8 +10,8 @@ Utilizado para extrair dados do sistema de [cadastro nacional dos estabeleciment
 
 ### Instalação
 
-Faça o clone do repositório utilizando `git clone https://github.com/vitorvasc/java-datasus-webscraper.git`
-Abra o prompt de comando e utilize o comando `java jar DataSus-1.0.jar`
+Faça o clone do repositório utilizando `git clone https://github.com/vitorvasc/java-datasus-webscraper.git`.
+Abra o prompt de comando e utilize o comando `java jar DataSus-1.0.jar`.
 
 ### Utilização
 
